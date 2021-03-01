@@ -1,0 +1,29 @@
+{%extends 'JSONConfigurer.html' %}
+
+{%block content%}
+
+
+<div class="masthead bg-primary text-white text-center">
+    <h1 class="masthead-heading text-uppercase mb-0">JSON Configurer</h1>
+</div>
+
+<div class="divider-custom mt-4">
+    <div class="divider-custom-line"></div>
+    <div class="divider-custom-line"></div>
+</div>
+
+
+<div class="container d-flex align-items-center flex-column">
+  <a class="btn btn-primary btn-xl m-2" href="{% url 'JSONConfigurer:list-camera' %}">Camere</a>
+  <div class="divider-custom mt-4">
+      <div class="divider-custom-line"></div>
+      <div class="divider-custom-line"></div>
+  </div>
+  <a class="btn btn-primary btn-xl m-2" href="{% url 'JSONConfigurer:list-mission' %}">Mission</a>
+  <div class="divider-custom mt-4">
+      <div class="divider-custom-line"></div>
+      <div class="divider-custom-line"></div>
+  </div>
+</div>
+
+{%endblock content%}

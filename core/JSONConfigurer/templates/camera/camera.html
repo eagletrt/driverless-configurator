@@ -1,0 +1,30 @@
+{%extends 'JSONConfigurer.html' %}
+
+{%block content%}
+
+<div class="masthead bg-primary text-white text-center">
+    <h1 class="masthead-heading text-uppercase mb-0">Camera</h1>
+</div>
+
+<div class="container d-flex align-items-center flex-column">
+  <div class="container d-flex align-items-center flex-column mt-3r">
+
+    <form method="POST">
+      {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-xl mt-4" name="download" value="Download">Download</button>
+    </form>
+
+    <div class="divider-custom mt-4">
+      <div class="divider-custom-line"></div>
+      <div class="divider-custom-line"></div>
+    </div>
+
+    <form method="POST">{% csrf_token %}
+      {{ camera.as_p }}
+      <input type="submit" name="submit" value="Save" />
+      <input type="submit" name="submit" value="Delete" />
+    </form>
+  </div>
+</div>
+
+{%endblock content%}

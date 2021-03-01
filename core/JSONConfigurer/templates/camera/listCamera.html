@@ -1,0 +1,61 @@
+{%extends 'JSONConfigurer.html' %}
+
+{%block content%}
+
+<div class="masthead bg-primary text-white text-center">
+    <h1 class="masthead-heading text-uppercase mb-0">Camere</h1>
+</div>
+
+<div class="container d-flex align-items-center flex-column">
+
+  <div class="container d-flex align-items-center flex-column mt-3r">
+
+    <a class="m-4" href="{% url 'JSONConfigurer:create-camera' %}">
+      <button class="btn btn-primary btn-xl">Crea</button>
+    </a>
+    
+    <div class="divider-custom mt-4">
+      <div class="divider-custom-line"></div>
+      <div class="divider-custom-line"></div>
+    </div>
+
+    {% for camera in data %}
+      <a href="{{camera.get_absolute_url}}">
+        <h4>
+          {{camera.name}}
+        </h4>
+      </a>
+      <h6>
+        Width: {{camera.width}}
+      </h6>
+      <h6>
+        Height: {{camera.height}}
+      </h6>
+      <h6>
+        Fps: {{camera.fps}}
+      </h6>
+
+      <div class="divider-custom mt-4">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-line"></div>
+      </div>
+
+    {% endfor%}
+  </div>
+
+<!--
+  <div class="container d-flex align-items-center flex-column mt-5 pt-2">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="control-group">
+        <div class="form-group floating-label-form-group  mb-0 pb-2">
+          <input class="" type="file" name="file">
+          <button class="btn btn-primary btn-xl" type="submit">Upload</button>
+        </div>
+      </div>
+    </form>
+  </div>
+-->
+</div>
+
+{%endblock content%}

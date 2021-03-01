@@ -1,0 +1,8 @@
+pyyaml
+django
+pandas
+vobject
+openpyxl
+gunicorn
+django-heroku
+django-sortedm2m
