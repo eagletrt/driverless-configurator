@@ -1,17 +1,47 @@
-<form method="POST">
-  {% csrf_token %}
+{% extends 'JSONConfigurer.html' %}
 
-  
+{% block content %}
 
-  Username: <input type="text" name="username"></br>
+<div class="masthead text-primary text-center">
+  <h1 class="masthead-heading mb-0">Login</h1>
+</div>
 
-  Password: <input type="password" name="password"></br>
+<div class="container d-flex align-items-center flex-column">
+  <div class="container d-flex align-items-center flex-column mt-3r">
 
-  {% for message in messages %}
-    {{message}}
-    </br>
-  {% endfor %}
+    <form method="POST">
+      {% csrf_token %}
+      <div class="control-group">
+          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+              <label>Username</label>
+              <input class="form-control" name="username" type="text" placeholder="username" required="required" data-validation-required-message="Please enter your name." />
+              <p class="help-block text-danger"></p>
+          </div>
+      </div>
+      <div class="control-group">
+          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+              <label>Password</label>
+              <input class="form-control" name="password" type="password" placeholder="Password" required="required" data-validation-required-message="not valid" />
+              <p class="help-block text-danger"></p>
+          </div>
+      </div>
+      <br />
+      <div id="success"></div>
+    
+      {{form.errors}}
+      
+      <div class="form-group">
+        <button class="btn btn-primary btn-xl" type="submit">Create</button>
+        <a href="{% url 'JSONConfigurer:register' %}">
+          SignUp
+        </a>
+      </div>
 
-  <input type="submit" name="login">
+    </form>
 
-</form>
+    
+
+  </div>
+</div>
+
+{% endblock content %}

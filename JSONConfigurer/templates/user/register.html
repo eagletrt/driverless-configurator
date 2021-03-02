@@ -1,24 +1,57 @@
+{% extends 'JSONConfigurer.html' %}
 
-<h1>
-  Register
-</h1>
+{% block content %}
 
-<form method="POST">
-  {% csrf_token %}
+<div class="masthead text-primary text-center">
+  <h1 class="masthead-heading mb-0">Register</h1>
+</div>
 
-  <!-- {% for field in form %}
-    {{field.label}}
-    {{field}}
-    </br>
-  {% endfor %} -->
+<div class="container d-flex align-items-center flex-column">
+  <div class="container d-flex align-items-center flex-column mt-3r">
+    <form method="POST">
+      {% csrf_token %}
+      <div class="control-group">
+          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+              <label>{{form.username.label}}</label>
+              <input class="form-control" name="username" type="text" placeholder="username" required="required" data-validation-required-message="Please enter your name." />
+              <p class="help-block text-danger"></p>
+          </div>
+      </div>
+      <div class="control-group">
+          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+              <label>{{form.email.label}}</label>
+              <input class="form-control" name="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address." />
+              <p class="help-block text-danger"></p>
+          </div>
+      </div>
+      <div class="control-group">
+          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+              <label>{{form.password1.label}}</label>
+              <input class="form-control" name="password1" type="password" placeholder="Password" required="required" data-validation-required-message="not valid" />
+              <p class="help-block text-danger"></p>
+          </div>
+      </div>
+      <div class="control-group">
+        <div class="form-group floating-label-form-group controls mb-0 pb-2">
+            <label>{{form.password2.label}}</label>
+            <input class="form-control" name="password2" type="password" placeholder="Password (again)" required="required" data-validation-required-message="Please enter your email address." />
+            <!-- {{form.password2}} -->
+            <p class="help-block text-danger"></p>
+        </div>
+      <br />
+      <div id="success"></div>
+      
+      {{form.errors}}
 
-  {{form.username.label}}: {{form.username}} </br>
-  {{form.email.label}}: {{form.email}}</br>
-  {{form.password1.label}}: {{form.password1}}</br>
-  {{form.password2.label}}: {{form.password2}}</br>
+      <div class="form-group">
+        <button class="btn btn-primary btn-xl" type="submit">Create</button>
+        <a href="{% url 'JSONConfigurer:login' %}">
+          SignIn
+        </a>
+      </div>
 
-  {{form.errors}}
+    </form>
+  </div>
+</div>
 
-  <input type="submit" name="Create User">
-
-</form>
+{% endblock content %}

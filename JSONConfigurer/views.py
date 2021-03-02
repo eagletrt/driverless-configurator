@@ -84,6 +84,7 @@ def createCamera(req):
 
 # Detail of a camera
 # Allow to edit delete or download camera
+@login_required(login_url="JSONConfigurer:login")
 def camera(req, id):
   camera = get_object_or_404(CameraModel, pk=id)
 
@@ -157,6 +158,7 @@ def createMission(req):
 
 # Detail of a mission
 # Allow to edit delete or download mission
+@login_required(login_url="JSONConfigurer:login")
 def mission(req, id):
   mission = get_object_or_404(MissionModel, id=id)
 

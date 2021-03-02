@@ -23,7 +23,7 @@
 
     <form method="POST">{% csrf_token %}
       {{mission.as_p}}
-      {% if request.user.is_authenticated %}
+      {% if request.user.is_staff %}
         <input type="submit" name="submit" value="Save">
         <input type="submit" name="submit" value="Delete"/>
       {% endif %}
