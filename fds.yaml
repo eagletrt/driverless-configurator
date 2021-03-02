@@ -1,0 +1,15 @@
+Camera.name: fds
+Camera.fx: 1.0
+Camera.fy: 2.0
+Camera.cx: 3.0
+Camera.cy: 4.0
+Camera.k1: 5.0
+Camera.k2: 6.0
+Camera.p1: 7.0
+Camera.p2: 8.0
+Camera.width: 123
+Camera.height: 2134
+Camera.fps: 231
+Camera.bf: 123.0
+Camera.BGR_RGB: true
+Camera.THDepth: 3214

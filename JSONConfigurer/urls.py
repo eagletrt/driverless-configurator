@@ -9,6 +9,10 @@ app_name = "JSONConfigurer"
 urlpatterns = [
   path('', views.home, name="home"),
 
+  path('login/',            views.loginPage,    name="login"),
+  path('logout/',           views.logoutPage,   name="logout"),
+  path('register/',         views.registerPage, name="reigster"),
+
   # Camera URLS
   path('listCamera',        views.listCamera,       name="list-camera"),
   path('camera',            views.createCamera,     name="create-camera"),

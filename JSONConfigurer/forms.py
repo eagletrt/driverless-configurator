@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms  import UserCreationForm
 
 from django.utils.timezone import now
 # Create your models here.
@@ -39,4 +41,14 @@ class MissionForm(forms.ModelForm):
             "PCLThreaded",
             "datasetPath",
             "camera",
+        ]
+
+class UserForm(UserCreationForm):
+    class Meta():
+        model = User
+        fields = [
+            "username",
+            "email",
+            "password1",
+            "password2"
         ]

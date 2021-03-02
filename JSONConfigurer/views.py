@@ -3,18 +3,58 @@ from django.views.generic.list import ListView
 from django.shortcuts import render, get_object_or_404, redirect
 
 from django.http import JsonResponse, StreamingHttpResponse, FileResponse, HttpResponse
+from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .models import CameraModel, MissionModel
-from .forms  import CameraForm, MissionForm
+from .forms  import CameraForm, MissionForm, UserForm
 
 from .scripts.cameraToYaml import *
 from .scripts.missionToJson import *
 
 def home(req):
-
   return render(req, 'JSONHome.html', {})
 
 
+def loginPage(req):
+  if req.user.is_authenticated:
+    return redirect("JSONConfigurer:home")
+
+  if req.method == "POST":
+    username = req.POST.get("username")
+    password = req.POST.get("password")
+
+    user = authenticate(req, username=username, password=password)
+
+    if not user == None:
+      login(req, user)
+      return redirect("JSONConfigurer:home")
+    else:
+      messages.info(req, "Username or password incorrect")
+
+  context = {}
+  return render(req, "user/login.html", context)
+
+def registerPage(req):
+  if req.user.is_authenticated:
+    return redirect("JSONConfigurer:home")
+
+  form  = UserForm(req.POST or None)
+
+  if form.is_valid():
+    form.save()
+    return redirect('JSONConfigurer:login')
+
+  context = {"form": form}
+  return render(req, "user/register.html", context)
+
+def logoutPage(req):
+  logout(req)
+
+  return redirect('JSONConfigurer:login')
 
 # List of all camera
 # Allow to select and then edit
@@ -29,6 +69,7 @@ def listCamera(req):
   return render(req, 'camera/listCamera.html', context)
 
 # Blank form to be filled and saved
+@login_required(login_url="JSONConfigurer:login")
 def createCamera(req):
 
   mCamera = CameraForm(req.POST or None)
@@ -100,6 +141,7 @@ def listMission(req):
 
 
 # Blank Mission to be filled and saved
+@login_required(login_url="JSONConfigurer:login")
 def createMission(req):
 
   mMission = MissionForm(req.POST or None)

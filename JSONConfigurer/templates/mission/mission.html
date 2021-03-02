@@ -23,9 +23,11 @@
 
     <form method="POST">{% csrf_token %}
       {{mission.as_p}}
-      <input type="submit" name="submit" value="Save">
-      <input type="submit" name="submit" value="Delete"/>
-    </form>
+      {% if request.user.is_authenticated %}
+        <input type="submit" name="submit" value="Save">
+        <input type="submit" name="submit" value="Delete"/>
+      {% endif %}
+      </form>
   </div>
 </div>
 
