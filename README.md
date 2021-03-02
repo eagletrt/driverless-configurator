@@ -6,7 +6,6 @@ App for perception team to configure camera and mission by creating yaml and jso
 
 To start the app:
 ~~~bash
-cd core
 python3 manage.py runserver
 ~~~
 
