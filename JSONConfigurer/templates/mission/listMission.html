@@ -10,9 +10,11 @@
 
   <div class="container d-flex align-items-center flex-column mt-3r">
 
-    <a class="m-4" href="{% url 'JSONConfigurer:create-mission' %}">
-      <button class="btn btn-primary btn-xl">Crea</button>
-    </a>
+    {% if request.user.is_staff %}
+      <a class="m-4" href="{% url 'JSONConfigurer:create-mission' %}">
+        <button class="btn btn-primary btn-xl">Crea</button>
+      </a>
+    {% endif %}
     
     <div class="divider-custom mt-4">
       <div class="divider-custom-line"></div>
