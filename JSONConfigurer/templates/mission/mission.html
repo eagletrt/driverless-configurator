@@ -10,10 +10,13 @@
 
 <div class="container d-flex align-items-center flex-column">
   <div class="container d-flex align-items-center flex-column mt-3r">
-    
+
     <form method="POST">
       {% csrf_token %}
-        <button type="submit" class="btn btn-primary btn-xl mt-4" name="download" value="Download">Download</button>
+        <button type="submit" class="btn btn-primary btn-xl mt-4" name="download" value="Download">
+          <i class="fas fa-download fa-2x"></i></br>
+          Download
+        </button>
     </form>
 
     <div class="divider-custom mt-4">

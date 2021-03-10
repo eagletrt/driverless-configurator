@@ -1,0 +1,46 @@
+{
+    "note": "Camera1",
+    "camera": {
+        "name": "fds",
+        "fx": 1.0,
+        "fy": 2.0,
+        "cx": 3.0,
+        "cy": 4.0,
+        "k1": 5.0,
+        "k2": 6.0,
+        "p1": 7.0,
+        "p2": 8.0,
+        "width": 123,
+        "height": 2134,
+        "fps": 231,
+        "bf": 123.0,
+        "BGR_RGB": true,
+        "THDepth": 3214
+    },
+    "slam": {
+        "RGB": true,
+        "ThDepth": 150,
+        "DepthMapFactor": 0
+    },
+    "ORBExtractor": {
+        "nFeautures": 500,
+        "scaleFactor": 1.3,
+        "nLevels": 8,
+        "iniThFAST": 20,
+        "minThFAST": 5
+    },
+    "viewer": {
+        "KeyFrameSize": 0.1,
+        "KeyFrameLineWidth": 1.0,
+        "ReferenceSystemSize": 5.0,
+        "ReferenceSystemLineWidth": 3.0,
+        "GraphLineWidth": 1.0,
+        "PointSize": 2.0,
+        "CameraSize": 0.15,
+        "CameraLineWidth": 2.0,
+        "ViewpointX": 0.0,
+        "ViewpointY": -10.0,
+        "ViewpointZ": -0.1,
+        "ViewpointF": 2000.0
+    }
+}

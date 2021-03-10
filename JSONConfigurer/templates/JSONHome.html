@@ -1,5 +1,7 @@
 {%extends 'JSONConfigurer.html' %}
 
+{% load static %}
+
 {%block content%}
 
 
@@ -7,11 +9,11 @@
     <h1 class="masthead-heading text-uppercase mb-0">JSON Configurer</h1>
 </div>
 
+<!--
 <div class="divider-custom mt-4">
     <div class="divider-custom-line"></div>
     <div class="divider-custom-line"></div>
 </div>
-
 
 <div class="container d-flex align-items-center flex-column">
   <a class="btn btn-primary btn-xl m-2" href="{% url 'JSONConfigurer:list-camera' %}">Camere</a>
@@ -25,5 +27,124 @@
       <div class="divider-custom-line"></div>
   </div>
 </div>
+-->
+
+<!-- Portfolio Section-->
+  <section class="page-section portfolio" id="portfolio">
+      <div class="container">
+          <!-- grid Items-->
+          <div class="row justify-content-center">
+            <!-- Item 1-->
+            <div class="col-md-6 col-lg-4">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                  href="{% url 'JSONConfigurer:list-mission' %}">
+                <div class="portfolio-item mx-auto">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <div class="text-center c1">
+                      <i class="fas fa-bolt fa-6x"></i>
+                      <h1>
+                        Mission
+                      </h1>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <!-- Item 2-->
+            <div class="col-md-6 col-lg-4">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                  href="{% url 'JSONConfigurer:list-configuration' %}">
+                <div class="portfolio-item mx-auto">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <div class="text-center c2">
+                      <i class="fas fa-database fa-6x"></i>
+                      <h1>
+                        General
+                      </h1>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <!-- Item 3-->
+            <div class="col-md-6 col-lg-4">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                  href="{% url 'JSONConfigurer:list-camera' %}">
+                <div class="portfolio-item mx-auto">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <div class="text-center c3">
+                      <i class="fas fa-camera fa-6x"></i>
+                      <h1>
+                        Camera
+                      </h1>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <!-- Item 3-->
+            <div class="col-md-6 col-lg-4">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                  href="{% url 'JSONConfigurer:list-configuration' %}">
+                <div class="portfolio-item mx-auto">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <div class="text-center c4">
+                      <i class="fas fa-map fa-6x"></i>
+                      <h1>
+                        Slam
+                      </h1>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <!-- Item 3-->
+            <div class="col-md-6 col-lg-4">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                  href="{% url 'JSONConfigurer:list-configuration' %}">
+                <div class="portfolio-item mx-auto">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <div class="text-center c5">
+                      <i class="fas fa-dot-circle fa-6x"></i>
+                      <h1>
+                        ORB
+                      </h1>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <!-- Item 3-->
+            <div class="col-md-6 col-lg-4">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded"
+                  href="{% url 'JSONConfigurer:list-configuration' %}">
+                <div class="portfolio-item mx-auto">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                    </div>
+                    <div class="text-center c6">
+                      <i class="fas fa-laptop fa-6x"></i>
+                      <h1>
+                        Viewer
+                      </h1>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+
+          </div>
+      </div>
+  </section>
 
 {%endblock content%}

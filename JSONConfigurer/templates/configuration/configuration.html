@@ -3,7 +3,7 @@
 {%block content%}
 
 <div class="masthead bg-primary text-white text-center">
-    <h1 class="masthead-heading text-uppercase mb-0">Camera</h1>
+    <h1 class="masthead-heading text-uppercase mb-0">Configurazione</h1>
 </div>
 
 <div class="container d-flex align-items-center flex-column">
@@ -23,7 +23,7 @@
     </div>
 
     <form method="POST">{% csrf_token %}
-      {{ camera.as_p }}
+      {{ configuration.as_p }}
       {% if request.user.is_staff %}
         <input type="submit" name="submit" value="Save" />
         <input type="submit" name="submit" value="Delete" />

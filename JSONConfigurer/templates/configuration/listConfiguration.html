@@ -3,7 +3,7 @@
 {%block content%}
 
 <div class="masthead bg-primary text-white text-center">
-    <h1 class="masthead-heading text-uppercase mb-0">Camere</h1>
+    <h1 class="masthead-heading text-uppercase mb-0">Configurazioni</h1>
 </div>
 
 <div class="container d-flex align-items-center flex-column">
@@ -11,7 +11,7 @@
   <div class="container d-flex align-items-center flex-column mt-3r">
 
     {% if request.user.is_staff %}
-      <a class="m-4" href="{% url 'JSONConfigurer:create-camera' %}">
+      <a class="m-4" href="{% url 'JSONConfigurer:create-configuration' %}">
         <button class="btn btn-primary btn-xl">Crea</button>
       </a>
     {% endif %}
@@ -21,21 +21,12 @@
       <div class="divider-custom-line"></div>
     </div>
 
-    {% for camera in data %}
-      <a href="{{camera.get_absolute_url}}">
-        <h4>
-          {{camera.name}}
+    {% for configuration in data %}
+      <a href="{{configuration.get_absolute_url}}">
+        <h4 >
+          {{configuration.note}}
         </h4>
       </a>
-      <h6>
-        Width: {{camera.width}}
-      </h6>
-      <h6>
-        Height: {{camera.height}}
-      </h6>
-      <h6>
-        Fps: {{camera.fps}}
-      </h6>
 
       <div class="divider-custom mt-4">
           <div class="divider-custom-line"></div>

@@ -1,0 +1,26 @@
+{
+    "note": "Mission1",
+    "mission": "Acceleration",
+    "mapping": true,
+    "rectsBeforeTracking": true,
+    "NNThreaded": true,
+    "PCLThreaded": true,
+    "datasetPath": "/",
+    "camera": {
+        "name": "fds",
+        "fx": 1.0,
+        "fy": 2.0,
+        "cx": 3.0,
+        "cy": 4.0,
+        "k1": 5.0,
+        "k2": 6.0,
+        "p1": 7.0,
+        "p2": 8.0,
+        "width": 123,
+        "height": 2134,
+        "fps": 231,
+        "bf": 123.0,
+        "BGR_RGB": true,
+        "THDepth": 3214
+    }
+}

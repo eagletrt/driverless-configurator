@@ -1,6 +1,8 @@
 # driverless-configurator
 Online django configurator for driverless perception team.
 
+![](/assets/images/home.png "Home")
+
 ## core
 App for perception team to configure camera and mission by creating yaml and json file.
 
