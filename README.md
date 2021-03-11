@@ -1,5 +1,6 @@
 # driverless-configurator
-Online django configurator for driverless perception team.
+Online django configurator for driverless perception team.  
+Application is **hosted** at https://driverless-configurator.herokuapp.com
 
 ![](/assets/images/home.png "Home")
 
@@ -15,6 +16,32 @@ This way the core app will start at local ip: 127.0.0.1:8000
 
 ## Requirements
 Postgres database
+
+## Used Commands
+Start the local server
+~~~bash
+python3 manage.py runserver
+# or
+python3 manage.py runserver your.ip.address.here:port
+~~~
+
+Make migrations:
+~~~bash
+python3 manage.py makemigrations
+~~~
+Migrate:
+~~~bash
+python3 manage.py migrate
+~~~
+These two last commands are used when the models are updated.  
+This makes effective the changes in models.py to the database.
+
+Be careful when changing names of models variables, it can cause errors.  
+Most of the times is necessary to reset the database tables.
+To do that:
+~~~bash
+python3 manage.py migrate appname zero
+~~~
 
 ## Create New Project
 To create a new project make sure to install Django

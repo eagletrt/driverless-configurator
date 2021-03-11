@@ -9,12 +9,16 @@
 <div class="container d-flex align-items-center flex-column">
   <div class="container d-flex align-items-center flex-column mt-3r">
 
+    {% if request.user.is_staff %}
     <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-      {% if request.user.is_staff %}
         <input type="file" name="file" />
         <input type="submit" name="submit" value="Upload" />
-      {% endif %}
       </form>
+    {% else %}
+    <p>
+      Sorry, this area is accessible only for staff
+    </p>
+    {% endif %}
   </div>
 </div>
 
