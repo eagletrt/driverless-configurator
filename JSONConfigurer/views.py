@@ -13,6 +13,7 @@ from .models import *
 from .forms  import *
 
 from .scripts.parser import *
+from .scripts.load   import *
 
 def home(req):
   return render(req, 'JSONHome.html', {})
@@ -293,3 +294,25 @@ def configuration(req, id):
   }
 
   return render(req, "configuration/configuration.html", context)
+
+
+#---------------------------------------------------#
+## Load Configurations From File
+#---------------------------------------------------#
+def loadMissionFromFile(req):
+    if req.method == "POST":
+        mFile = req.FILES.get("file")
+        if loadMission(mFile):
+            return redirect("JSONConfigurer:list-mission")
+
+    context = {}
+    return render(req, "load.html", context)
+
+def loadGeneralFromFile(req):
+    if req.method == "POST":
+        mFile = req.FILES.get("file")
+        if loadGeneral(mFile):
+            return redirect("JSONConfigurer:list-configuration")
+
+    context = {}
+    return render(req, "load.html", context)

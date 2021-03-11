@@ -28,6 +28,9 @@ urlpatterns = [
   path('configurations',           views.createConfiguration,     name="create-configuration"),
   path('configurations/<int:id>',  views.configuration,           name="configuration"),
 
+  path('loadMission', views.loadMissionFromFile, name="load-mission"),
+  path('loadGeneral', views.loadGeneralFromFile, name="load-general"),
+
   # # Slam URLS
   # path('listSlam',       views.listSlam,      name="list-slam"),
   # path('slam',           views.createSlam,     name="create-slam"),

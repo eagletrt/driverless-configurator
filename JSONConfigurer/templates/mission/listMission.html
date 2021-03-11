@@ -15,7 +15,7 @@
         <button class="btn btn-primary btn-xl">Crea</button>
       </a>
     {% endif %}
-    
+
     <div class="divider-custom mt-4">
       <div class="divider-custom-line"></div>
       <div class="divider-custom-line"></div>
@@ -24,14 +24,14 @@
      {% for mission in data %}
         <a href="{{mission.get_absolute_url}}">
           <h6>
-            {{mission.note}}
+            {{mission.Note}}
           </h6>
         </a>
         <h6>
-          Mission: {{mission.mission}}
+          Mission: {{mission.Mission}}
         </h6>
         <h6>
-          Mapping: {{mission.mapping}}
+          Mapping: {{mission.Mapping}}
         </h6>
         <div class="divider-custom mt-4">
             <div class="divider-custom-line"></div>

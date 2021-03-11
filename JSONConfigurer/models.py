@@ -74,7 +74,7 @@ class SlamModel(models.Model):
     def __str__(self):
         return "rgb:{},ThDepth:{},DepthMapFactor:{}".format(self.RGB, self.ThDepth, self.DepthMapFactor)
 
-class ORBextractorModel(models.Model):
+class ORBExtractorModel(models.Model):
     nFeautures = IntegerField()
     scaleFactor = FloatField()
     nLevels = IntegerField()
@@ -116,7 +116,7 @@ class GeneralModel(models.Model):
         null=True
     )
     ORBExtractor = ForeignKey(
-        ORBextractorModel,
+        ORBExtractorModel,
         on_delete=models.CASCADE,
         null=True
     )

@@ -1,0 +1,21 @@
+{%extends 'JSONConfigurer.html' %}
+
+{%block content%}
+
+<div class="masthead bg-primary text-white text-center">
+    <h1 class="masthead-heading text-uppercase mb-0">Upload</h1>
+</div>
+
+<div class="container d-flex align-items-center flex-column">
+  <div class="container d-flex align-items-center flex-column mt-3r">
+
+    <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+      {% if request.user.is_staff %}
+        <input type="file" name="file" />
+        <input type="submit" name="submit" value="Upload" />
+      {% endif %}
+      </form>
+  </div>
+</div>
+
+{%endblock content%}

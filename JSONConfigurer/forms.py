@@ -5,43 +5,18 @@ from django.contrib.auth.forms  import UserCreationForm
 from django.utils.timezone import now
 # Create your models here.
 
-from .models import CameraModel, MissionModel, GeneralModel
+from .models import *
 
 
 class CameraForm(forms.ModelForm):
     class Meta():
         model = CameraModel
-        fields = [
-            "name",
-            "fx",
-            "fy",
-            "cx",
-            "cy",
-            "k1",
-            "k2",
-            "p1",
-            "p2",
-            "width",
-            "height",
-            "fps",
-            "bf",
-            "BGR_RGB",
-            "THDepth"
-        ]
+        fields = "__all__"
 
 class MissionForm(forms.ModelForm):
     class Meta():
         model = MissionModel
-        fields = [
-            "Note",
-            "Mission",
-            "Mapping",
-            "RectsBeforeTracking",
-            "NNThreaded",
-            "PCLThreaded",
-            "DatasetPath",
-            "Camera",
-        ]
+        fields = "__all__"
 
 class UserForm(UserCreationForm):
     class Meta():
@@ -56,10 +31,19 @@ class UserForm(UserCreationForm):
 class GeneralForm(forms.ModelForm):
     class Meta():
         model = GeneralModel
-        fields = [
-            "note",
-            "Camera",
-            "SLAM",
-            "ORBExtractor",
-            "Viewer"
-        ]
+        fields = "__all__"
+
+class SLAMForm(forms.ModelForm):
+    class Meta():
+        model = SlamModel
+        fields = "__all__"
+
+class ORBExtractorForm(forms.ModelForm):
+    class Meta():
+        model = ORBExtractorModel
+        fields = "__all__"
+
+class ViewerForm(forms.ModelForm):
+    class Meta():
+        model = ViewerModel
+        fields = "__all__"
