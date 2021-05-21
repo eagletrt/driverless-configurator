@@ -1,0 +1,117 @@
+{%extends 'DashboardBase.html' %}
+
+{% load static %}
+
+{%block content%}
+
+
+<div class="masthead bg-primary text-white text-center">
+    <h1 class="masthead-heading text-uppercase mb-0">Dashboard</h1>
+</div>
+
+<section class="page-section portfolio" id="portfolio">
+    <div class="container">
+      {% for sensor in names %}
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4" onclick="draw_graph('{{sensor}}')">
+            <div class="portfolio-item mx-auto">
+                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                    <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                </div>
+                <div class="text-center c1">
+                  <h3>
+                    {{sensor}}
+                  </h3>
+                </div>
+            </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</section>
+
+
+<div id="Modal" class="modal">
+  <div class="modal-content">
+    <span class="close">
+      <i class="fas fa-times fa-2x"></i>
+    </span>
+    <canvas id="chart"></canvas>
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+var modal = document.getElementById("Modal");
+var span = document.getElementsByClassName("close")[0];
+
+var dynamicColors = function() {
+  var r = Math.floor(Math.random() * 255);
+  var g = Math.floor(Math.random() * 255);
+  var b = Math.floor(Math.random() * 255);
+  return "rgb(" + r + "," + g + "," + b + ")";
+};
+
+var chart=null;
+function draw_graph(name){
+
+  console.log(name)
+
+  data = "{{data | escapejs}}";
+  json = JSON.parse(data);
+
+  var $populationChart = $("#chart");
+  var ctx = $populationChart[0].getContext("2d");
+  var new_datasets = []
+  var axis_x = json[name]["timestamp"]
+  for(var key in json[name]){
+    if(key != "timestamp" && key != "scale"){
+      new_datasets.push({
+        label: name + " " + key,
+        data: json[name][key],
+        fill: false,
+        backgroundColor: 'blue',
+        borderColor: dynamicColors(),
+        pointRadius: 0.1,
+      })
+    }
+  }
+  if(chart != null)
+    chart.destroy()
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: axis_x,
+      datasets: new_datasets
+    },
+    options: {
+      responsive: true,
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Sensors Line Chart'
+      }
+    }
+
+  });
+
+  // Show Modal
+  modal.style.display = "block";
+};
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+// window.onclick = function(event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// }
+</script>
+
+
+{%endblock content%}

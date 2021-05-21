@@ -1,0 +1,32 @@
+{%extends 'DashboardBase.html' %}
+
+{% load static %}
+
+{%block content%}
+
+
+<div class="container d-flex align-items-center flex-column">
+  <div class="container d-flex align-items-center flex-column mt-3r">
+    <a class="navbar-brand js-scroll-trigger" href="{% url 'Dashboard:home' %}"></a>
+  </div>
+</div>
+
+
+
+<div class="container d-flex align-items-center flex-column">
+
+  <div class="container d-flex align-items-center flex-column mt-3r">
+    {% for dataset in data %}
+    <a href="{{dataset.get_absolute_url}}">
+      <h6>
+        {{dataset.name}}
+      </h6>
+    </a>
+
+    {% endfor %}
+
+  </div>
+</div>
+
+
+{%endblock content%}

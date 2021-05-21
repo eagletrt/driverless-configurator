@@ -1,6 +1,8 @@
 from django.shortcuts import render
 
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, StreamingHttpResponse, FileResponse, HttpResponse
+
 
 from .models import *
 from .forms  import *
@@ -9,11 +11,19 @@ import json
 
 # Create your views here.
 def home(req):
-
     return render(req, 'DashboardHome.html', {})
 
-def set_data(req):
 
+def view(req, id):
+    obj = get_object_or_404(DataModel, id=id)
+    obj.data = json.loads(obj.data)
+    context = {
+        "names": obj.data.keys(),
+        "data": json.dumps(obj.data),
+    }
+    return render(req, 'Dashboard.html', context)
+
+def set_data(req):
     if(req.method == "POST"):
         dd = json.loads(req.body)
         dd["object"] = str(dd["object"])
@@ -28,7 +38,6 @@ def get_data(req):
     if(req.method == "GET"):
         datas = DataModel.objects.all()
         for data in datas:
-            print(data.data)
             d_j = json.loads(data.data)
             labels = []
             data = []
@@ -47,3 +56,20 @@ def get_data(req):
 
 
     return JsonResponse("{}", safe=False)
+
+
+def database(req):
+
+    objs = DataModel.objects.all()
+
+    context = {
+        "data": objs
+    }
+
+    return render(req, "Database.html", context)
+
+
+def real_time(req):
+
+
+    return render(req, "Dashboard.html", {})

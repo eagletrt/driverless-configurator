@@ -1,62 +1,46 @@
-{%extends 'Dashboard.html' %}
+{%extends 'DashboardBase.html' %}
 
 {% load static %}
 
 {%block content%}
 
+<div class="masthead bg-primary text-white text-center">
+    <h1 class="masthead-heading text-uppercase mb-0">Dashboard</h1>
+</div>
 
-  <div id="container" style="width: 75%;">
-    <canvas id="chart" data-url="{% url 'Dashboard:get-data' %}"></canvas>
+
+<div>
+  <div class="container d-flex align-items-center flex-column">
+    <div class="container d-flex align-items-center flex-column mt-3r">
+      <a class="navbar-brand js-scroll-trigger" href="{% url 'Dashboard:real-time' %}">Real Time</a>
+    </div>
   </div>
+  <div class="container d-flex align-items-center flex-column">
+    <div class="container d-flex align-items-center flex-column mt-3r">
+      <a class="navbar-brand js-scroll-trigger" href="{% url 'Dashboard:database' %}">Database</a>
+    </div>
+  </div>
+</div>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-  <script>
+<!--
 
-    $(function () {
-
-      var $populationChart = $("#chart");
-      $.ajax({
-        url: $populationChart.data("url"),
-        success: function (data) {
-          var ctx = $populationChart[0].getContext("2d");
-          var new_datasets = []
-          for(var i = 0; i < data.data.length; i++){
-            if((data.labels[i].includes("Pedal") || data.labels[i].includes("Gyro")) && !data.labels[i].includes("timestamp")){
-              var dataset = {
-                label: data.labels[i],
-                data: data.data[i][0],
-                fill: false,
-                backgroundColor: 'blue',
-                borderColor: 'rgb(75, 192, 192)',
-              }
-              new_datasets.push(dataset)
-            }
-          }
-          console.log(new_datasets)
-          new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: data.x,
-              datasets: new_datasets
-            },
-            options: {
-              responsive: true,
-              legend: {
-                position: 'top',
-              },
-              title: {
-                display: true,
-                text: 'Sensors Line Chart'
-              }
-            }
-          });
-
-        }
-      });
-    });
-
-  </script>
-
+<div class="row justify-content-center">
+<div class="col-md-6 col-lg-4">
+  <a class="nav-link py-3 px-0 px-lg-3 rounded"
+      href="{% url 'JSONConfigurer:list-mission' %}">
+    <div class="portfolio-item mx-auto">
+        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+        </div>
+        <div class="text-center c1">
+          <i class="fas fa-bolt fa-6x"></i>
+          <h3>
+            Mission
+          </h3>
+        </div>
+    </div>
+    </a>
+</div>
+-->
 
 {%endblock content%}
