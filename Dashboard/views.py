@@ -26,9 +26,9 @@ def view(req, id):
 def set_data(req):
     if(req.method == "POST"):
         dd = json.loads(req.body)
-        dd["object"] = str(dd["object"])
-        dd["object"] = dd["object"].replace("\'", "\"")
-        df = DataForm({"name":"mklvmdf", "data": dd["object"]})
+        dd["object"]["data"] = str(dd["object"]["data"])
+        dd["object"]["data"] = dd["object"]["data"].replace("\'", "\"")
+        df = DataForm({"name": dd["object"]["name"], "data": dd["object"]["data"]})
         if(df.is_valid()):
             df.save()
 
