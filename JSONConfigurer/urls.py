@@ -9,27 +9,27 @@ app_name = "JSONConfigurer"
 urlpatterns = [
   path('', views.home, name="home"),
 
-  path('login/',            views.loginPage,    name="login"),
-  path('logout/',           views.logoutPage,   name="logout"),
-  path('register/',         views.registerPage, name="register"),
+  path('login/',                    views.loginPage,                name="login"),
+  path('logout/',                   views.logoutPage,               name="logout"),
+  path('register/',                 views.registerPage,             name="register"),
 
   # Camera URLS
-  path('listCamera',        views.listCamera,       name="list-camera"),
-  path('camera',            views.createCamera,     name="create-camera"),
-  path('camera/<int:id>',   views.camera,           name="camera"),
+  path('listCamera',                views.listCamera,               name="list-camera"),
+  path('camera',                    views.createCamera,             name="create-camera"),
+  path('camera/<int:id>',           views.camera,                   name="camera"),
 
   # Mission URLS
-  path('listMission',       views.listMission,      name="list-mission"),
-  path('mission',           views.createMission,    name="create-mission"),
-  path('mission/<int:id>',  views.mission,          name="mission"),
+  path('listMission',               views.listMission,              name="list-mission"),
+  path('mission',                   views.createMission,            name="create-mission"),
+  path('mission/<int:id>',          views.mission,                  name="mission"),
 
   # General Configuration
-  path('listConfigurations',       views.listConfigurations,      name="list-configuration"),
-  path('configurations',           views.createConfiguration,     name="create-configuration"),
-  path('configurations/<int:id>',  views.configuration,           name="configuration"),
+  path('listConfigurations',       views.listConfigurations,        name="list-configuration"),
+  path('configurations',           views.createConfiguration,       name="create-configuration"),
+  path('configurations/<int:id>',  views.configuration,             name="configuration"),
 
-  path('loadMission', views.loadMissionFromFile, name="load-mission"),
-  path('loadGeneral', views.loadGeneralFromFile, name="load-general"),
+  path('loadMission',               views.loadMissionFromFile,      name="load-mission"),
+  path('loadGeneral',               views.loadGeneralFromFile,      name="load-general"),
 
   # # Slam URLS
   # path('listSlam',       views.listSlam,      name="list-slam"),

@@ -14,6 +14,20 @@ missionOpts = [
 
 defPath = os.path.dirname(os.path.abspath(__file__))
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Create your models here.
 class CameraModel(models.Model):
   name = models.CharField(max_length=200)
@@ -42,6 +56,23 @@ class CameraModel(models.Model):
   def __str__(self):
     return "{}_{}_{}_{}".format(self.name, self.width, self.height, self.fps)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class MissionModel(models.Model):
   Note = models.CharField(max_length=500, blank=True)
 
@@ -65,6 +96,20 @@ class MissionModel(models.Model):
   def get_absolute_url(self):
     return reverse("JSONConfigurer:mission", kwargs={"id": self.id})
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class SlamModel(models.Model):
     RGB = BooleanField(default=True)
     ThDepth = IntegerField()
@@ -73,6 +118,20 @@ class SlamModel(models.Model):
     #   return reverse("JSONConfigurer:mission", kwargs={"id": self.id})
     def __str__(self):
         return "rgb:{},ThDepth:{},DepthMapFactor:{}".format(self.RGB, self.ThDepth, self.DepthMapFactor)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ORBExtractorModel(models.Model):
     nFeautures = IntegerField()
@@ -84,6 +143,23 @@ class ORBExtractorModel(models.Model):
     #   return reverse("JSONConfigurer:mission", kwargs={"id": self.id})
     def __str__(self):
         return "nFeatures:{},scaleFactor:{},nLevels{}".format(self.nFeautures, self.scaleFactor, self.nLevels)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class ViewerModel(models.Model):
     KeyFrameSize = FloatField()
@@ -101,6 +177,23 @@ class ViewerModel(models.Model):
 
     def __str__(self):
         return "KFSize:{},KFLineWidth:{}".format(self.KeyFrameSize, self.KeyFrameLineWidth)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class GeneralModel(models.Model):
     note = CharField(max_length=500, blank=True)

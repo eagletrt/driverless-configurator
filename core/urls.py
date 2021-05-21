@@ -9,5 +9,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Including urlpatterns from JSONConfigurer app
-    path("JSONConfigurer/", include("JSONConfigurer.urls"))
+    path("JSONConfigurer/", include("JSONConfigurer.urls")),
+    path("Dashboard/", include("Dashboard.urls")),
 ]

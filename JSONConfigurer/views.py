@@ -9,6 +9,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
+from django.utils.html import escape
+
 from .models import *
 from .forms  import *
 
@@ -94,6 +96,11 @@ def createCamera(req):
 # Allow to edit delete or download camera
 @login_required(login_url="JSONConfigurer:login")
 def camera(req, id):
+  print(req)
+  print(req.GET)
+  print(req.POST)
+  print(req.user)
+  print(escape(repr(req)))
   camera = get_object_or_404(CameraModel, pk=id)
 
   mCamera = CameraForm(req.POST or None, instance=camera)
