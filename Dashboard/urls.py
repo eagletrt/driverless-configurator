@@ -7,4 +7,6 @@ from Dashboard import views as views
 app_name = "Dashboard"
 urlpatterns = [
   path('', views.home, name="home"),
+
+  path('getData', views.get_data, name="get-data"),
 ]
