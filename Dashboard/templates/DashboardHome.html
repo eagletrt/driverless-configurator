@@ -20,27 +20,36 @@
         url: $populationChart.data("url"),
         success: function (data) {
           var ctx = $populationChart[0].getContext("2d");
-          var datasets = []
+          var new_datasets = []
           for(var i = 0; i < data.data.length; i++){
-            var dataset = {
-              label: data.labels[i],
-              data: data.data[i],
-              fill: false,
-              borderColor: 'rgb(75, 192, 192)',
-              tension: 0.1,
+            if((data.labels[i].includes("Pedal") || data.labels[i].includes("Gyro")) && !data.labels[i].includes("timestamp")){
+              var dataset = {
+                label: data.labels[i],
+                data: data.data[i][0],
+                fill: false,
+                backgroundColor: 'blue',
+                borderColor: 'rgb(75, 192, 192)',
+              }
+              new_datasets.push(dataset)
             }
-            datasets.push(dataset)
           }
-          console.log(datasets)
+          console.log(new_datasets)
           new Chart(ctx, {
             type: 'line',
             data: {
               labels: data.x,
-              datasets: datasets
+              datasets: new_datasets
             },
             options: {
               responsive: true,
-            },
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Sensors Line Chart'
+              }
+            }
           });
 
         }
