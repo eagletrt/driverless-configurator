@@ -11,3 +11,9 @@ class DataForm(forms.ModelForm):
     class Meta():
         model = DataModel
         fields = "__all__"
+
+
+class RealTimeForm(forms.ModelForm):
+    class Meta():
+        model = RealTimeModel
+        fields = "__all__"

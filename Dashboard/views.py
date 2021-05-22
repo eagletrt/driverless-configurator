@@ -7,6 +7,8 @@ from django.http import JsonResponse, StreamingHttpResponse, FileResponse, HttpR
 from .models import *
 from .forms  import *
 
+import time
+
 import json
 
 # Create your views here.
@@ -71,5 +73,51 @@ def database(req):
 
 def real_time(req):
 
+    obj = list(RealTimeModel.objects.all())[0]
+    obj.data = json.loads(obj.data)
+    context = {
+        "realtime": True,
+        "names": obj.data.keys(),
+        "data": json.dumps(obj.data),
+    }
+    return render(req, "Dashboard.html", context)
 
-    return render(req, "Dashboard.html", {})
+def rt_get_data(req, sensor):
+    sensor = sensor.replace("-", " ")
+    obj = list(RealTimeModel.objects.all())[0]
+    print(obj.timestamp)
+
+    # data is string in json format, so load it
+    d_j = json.loads(obj.data)
+    d_j = d_j[str(sensor)]
+
+    # setup labels and data arrays
+    labels = []
+    data = d_j
+
+    # max count of elements to setup x axis
+    max = 0
+    for key in d_j.keys():
+        labels.append(key)
+        if len(d_j[key]) > max:
+            max = len(d_j[key])
+    print(labels)
+    print(data)
+    context = {
+        "realtime": True,
+        "names": [sensor],
+        "data": json.dumps(d_j),
+    }
+    return JsonResponse(context, safe=False)
+
+def rt_set_data(req):
+    if(req.method == "POST"):
+        dd = json.loads(req.body)
+        dd["object"]["data"] = str(dd["object"]["data"])
+        dd["object"]["data"] = dd["object"]["data"].replace("\'", "\"")
+        df = RealTimeForm({"name": dd["object"]["name"], "data": dd["object"]["data"], "timestamp": str(time.time())})
+        if(df.is_valid()):
+            RealTimeModel.objects.all().delete()
+            df.save()
+
+    return JsonResponse("{}", safe=False)

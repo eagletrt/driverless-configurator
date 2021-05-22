@@ -10,3 +10,12 @@ class DataModel(models.Model):
 
     def get_absolute_url(self):
         return reverse("Dashboard:view", kwargs={"id": self.id})
+
+
+class RealTimeModel(models.Model):
+    name = models.CharField(max_length=200)
+    data = models.CharField(max_length=10485700)
+    timestamp = models.CharField(max_length=200)
+
+    def get_absolute_url(self):
+        return reverse("Dashboard:view", kwargs={"id": self.id})
