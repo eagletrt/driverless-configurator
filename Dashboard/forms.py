@@ -1,11 +1,12 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms  import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm
 
 from django.utils.timezone import now
 # Create your models here.
 
 from .models import *
+
 
 class DataForm(forms.ModelForm):
     class Meta():
@@ -16,4 +17,10 @@ class DataForm(forms.ModelForm):
 class RealTimeForm(forms.ModelForm):
     class Meta():
         model = RealTimeModel
+        fields = "__all__"
+
+
+class StringForm(forms.ModelForm):
+    class Meta():
+        model = StringModel
         fields = "__all__"

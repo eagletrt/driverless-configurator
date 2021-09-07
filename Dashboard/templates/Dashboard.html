@@ -11,23 +11,23 @@
 
 
 <div class="masthead bg-primary text-white text-center">
-    <h1 class="masthead-heading text-uppercase mb-0">Dashboard</h1>
+  <h1 class="masthead-heading text-uppercase mb-0">Dashboard</h1>
 </div>
 
 <div class="container mt-4">
   {% for sensor in names %}
   <div class="row justify-content-center">
     <div class="col-md-6 col-lg-4" onclick="draw_graph('{{sensor}}')">
-        <div class="portfolio-item mx-auto">
-            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
-            </div>
-            <div class="text-center c1">
-              <h3>
-                {{sensor}}
-              </h3>
-            </div>
+      <div class="portfolio-item mx-auto">
+        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+          <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
         </div>
+        <div class="text-center c1">
+          <h3>
+            {{sensor}}
+          </h3>
+        </div>
+      </div>
     </div>
   </div>
   {% endfor %}
@@ -57,144 +57,176 @@
 
 
 
-
 <script>
 
-var modal = document.getElementById("Modal");
-var close = document.getElementById("CloseModal");
+  const socket = new WebSocket('ws://localhost:8000');
 
-var pollvar;
+  var enableParsing = false;
+  var graphName = null;
 
-var dynamicColors = function() {
-  var r = Math.floor(Math.random() * 255);
-  var g = Math.floor(Math.random() * 255);
-  var b = Math.floor(Math.random() * 255);
-  return "rgb(" + r + "," + g + "," + b + ")";
-};
+  // Chart
+  var datasets = []
+  var labels = [];
+  var chart = null;
 
-var chart = null;
-function draw_graph(name){
-  console.log(name)
+  var someColors = []
 
-  var url = "http://127.0.0.1:8000/Dashboard/realTime/getData/" + name.replace(' ', '-');
-  let data;
-  let json;
-  var dataset = []
+  socket.addEventListener('message', function (event) {
+    if (enableParsing) {
+      graphName = graphName.charAt(0).toLowerCase() + graphName.slice(1);
+      graphName = graphName.replace(" ", "");
 
-  if("{{realtime}}" == "True"){
-    function do_poll(){
-      $.post(url, function(res) {
-        data = res;
-        json = JSON.parse(data.data);
-        pollvar = setTimeout(do_poll, 500);
-        dataset = setup_dataset(json);
-        if(dataset != [] && chart != null){
-          chart.data.labels = dataset[0];
-          for(var i = 0; i < chart.data.datasets.length; i++){
-            chart.data.datasets[i] = dataset[1][i];
-          }
-          chart.update('active');
-        }else{
-          create_graph(dataset);
+      var json = JSON.parse(event.data)
+      var sensorData = json[graphName]
+
+      var size = Object(sensorData).length
+      var keys = [];
+      if (size > 0) {
+        keys = Object.keys(sensorData[0]);
+      } else {
+        return;
+      }
+      keys = keys.filter(el => el != "timestamp")
+
+      labels = []
+      datasets = []
+      keys.forEach((element, i) => {
+        newDataset = {
+          label: element,
+          data: [],
+          borderColor: someColors[i],
+          pointRadius: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.0)",
+          // yAxisID: i == 0 ? "y" : "y" + i.toString(),
+          yAxisID: "y"
         }
+        datasets.push(newDataset)
       });
-    }
-    clearTimeout(pollvar);
-    do_poll()
-  }else{
-    data = "{{data | escapejs}}";
-    json = JSON.parse(data);
-  }
 
-  if("{{realtime}}" != "True"){
-    json = json[name]
+      // for each sensor object
+      for (let el = 0; el < size; el++) {
+        // for each sensor value of current object
+        keys.forEach((element, i) => {
+          datasets[i].data.push(sensorData[el][element])
+        })
+        labels.push(sensorData[el]["timestamp"])
+      }
 
-    var dataset = setup_dataset(json);
-    create_graph(dataset);
-  }
-
-  // Show Modal
-  modal.style.display = "block";
-};
-
-
-function setup_dataset(json){
-  var new_datasets = []
-
-  var axis_x = json["timestamp"]
-  for(var key in json){
-    if(key != "timestamp" && key != "scale"){
-      var color = dynamicColors();
-      new_datasets.push({
-        label: name + " " + key,
-        data: json[key],
-        fill: false,
-        backgroundColor: color,
-        borderColor: color,
-        pointRadius: 0.1,
-      })
-    }
-  }
-
-  return [axis_x, new_datasets];
-}
-
-
-function create_graph(data){
-  var $sensorChart = $("#chart");
-  var ctx = $sensorChart[0].getContext("2d");
-
-  var axis_x = data[0];
-  var datasets = data[1];
-
-  if(chart != null)
-    chart.destroy()
-  chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: axis_x,
-      datasets: datasets,
-    },
-    options: {
-      scales: {
-        xAxes: [{
-          type: 'time',
-          time: {
-            parser: 'YYYY-MM-DD HH:mm:ss',
-            unit: 'second',
-            displayFormats: {
-              'minute': 'HH:mm',
-              'hour': 'HH:mm'
-            }
-          },
-          ticks: {
-            source: 'auto'
-          }
-        }]
-      },
-      pan: {
-        enabled: true,
-        mode: 'xy',
-        speed: 1,
-        sensitivity: 0.1,
-        threshold: 0,
-      },
-      zoom: {
-        enabled: true,
-        drag: false,
-        mode: 'xy',
-        speed: 0.1,
-        sensitivity: 0,
-        threshold: 0,
+      if (chart == null) {
+        create_graph(labels, datasets)
+      } else {
+        update_graph(labels, datasets)
+        // create_graph(labels, datasets)
       }
     }
   });
-}
 
-close.onclick = function() {
-  modal.style.display = "none";
-  clearTimeout(pollvar);
-}
+  var dynamicColors = function () {
+    var r = Math.floor(Math.random() * 255);
+    var g = Math.floor(Math.random() * 255);
+    var b = Math.floor(Math.random() * 255);
+    return "rgb(" + r + "," + g + "," + b + ")";
+  };
+
+  for (let i = 0; i < 20; i++) {
+    someColors.push(dynamicColors());
+  }
+
+  var modal = document.getElementById("Modal");
+  var close = document.getElementById("CloseModal");
+
+  function draw_graph(name) {
+    // Show Modal
+    modal.style.display = "block";
+
+    // Set name and start receiving data
+    graphName = name;
+    enableParsing = true;
+
+    if (chart != null) {
+      chart.destroy()
+      chart = null;
+    }
+  };
+
+  function update_graph(labels, datasets) {
+    if (chart == null)
+      return
+
+    var max_size = 1000;
+    chart.data.labels.push(...labels);
+    if (chart.data.labels.length > max_size) {
+      chart.data.labels = chart.data.labels.slice(chart.data.labels.length - max_size, chart.data.labels.length);
+    }
+    for (index in chart.data.datasets) {
+      chart.data.datasets[index].data.push(...datasets[index].data);
+
+      if (chart.data.datasets[index].data.length > max_size) {
+        chart.data.datasets[index].data = chart.data.datasets[index].data.slice(chart.data.datasets[index].data.length - max_size, chart.data.datasets[index].data.length);
+      }
+    }
+    chart.update();
+  }
+
+
+  function create_graph(labels, datasets) {
+    var $sensorChart = $("#chart");
+    ctx = $sensorChart[0].getContext("2d");
+
+    if (chart != null) {
+      chart.destroy()
+    }
+
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        datasets: datasets,
+        labels: labels
+      },
+      options: {
+        animation: {
+          duration: 10,
+          x: true,
+          y: false,
+        },
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        stacked: false,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Chart.js Line Chart - Multi Axis'
+          }
+        },
+        scales: {
+          yAxes: [
+            {
+              type: 'linear',
+              display: true,
+              position: 'left',
+              id: 'y',
+              ticks: {
+                beginAtZero: true
+              }
+            },
+          ]
+        }
+      }
+    });
+    for (var idx in datasets) {
+      if (idx != 0)
+        chart.getDatasetMeta(idx).hidden = true;
+    }
+  }
+
+  close.onclick = function () {
+    modal.style.display = "none";
+    enableParsing = false;
+    graphName = null
+  }
 </script>
 
 

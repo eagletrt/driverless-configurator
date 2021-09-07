@@ -5,13 +5,18 @@ from django.http import JsonResponse, StreamingHttpResponse, FileResponse, HttpR
 
 
 from .models import *
-from .forms  import *
+from .forms import *
 
 import time
 
 import json
 
+from google.protobuf import json_format
+from .devices_pb2 import *
+
 # Create your views here.
+
+
 def home(req):
     return render(req, 'DashboardHome.html', {})
 
@@ -25,16 +30,19 @@ def view(req, id):
     }
     return render(req, 'Dashboard.html', context)
 
+
 def set_data(req):
     if(req.method == "POST"):
-        dd = json.loads(req.body)
-        dd["object"]["data"] = str(dd["object"]["data"])
-        dd["object"]["data"] = dd["object"]["data"].replace("\'", "\"")
-        df = DataForm({"name": dd["object"]["name"], "data": dd["object"]["data"]})
-        if(df.is_valid()):
-            df.save()
+        print(req.body)
+        # dd = json.loads(req.body)
+        # dd["object"]["data"] = str(dd["object"]["data"])
+        # dd["object"]["data"] = dd["object"]["data"].replace("\'", "\"")
+        # df = DataForm({"name": dd["object"]["name"], "data": dd["object"]["data"]})
+        # if(df.is_valid()):
+        #     df.save()
 
     return JsonResponse("{}", safe=False)
+
 
 def get_data(req):
     if(req.method == "GET"):
@@ -55,7 +63,6 @@ def get_data(req):
             for i in range(0, max):
                 x.append(i)
             return JsonResponse({"labels": labels, "data": data, "x": x})
-
 
     return JsonResponse("{}", safe=False)
 
@@ -81,6 +88,7 @@ def real_time(req):
         "data": json.dumps(obj.data),
     }
     return render(req, "Dashboard.html", context)
+
 
 def rt_get_data(req, sensor):
     sensor = sensor.replace("-", " ")
@@ -110,14 +118,15 @@ def rt_get_data(req, sensor):
     }
     return JsonResponse(context, safe=False)
 
+
 def rt_set_data(req):
     if(req.method == "POST"):
-        dd = json.loads(req.body)
-        dd["object"]["data"] = str(dd["object"]["data"])
-        dd["object"]["data"] = dd["object"]["data"].replace("\'", "\"")
-        df = RealTimeForm({"name": dd["object"]["name"], "data": dd["object"]["data"], "timestamp": str(time.time())})
-        if(df.is_valid()):
-            RealTimeModel.objects.all().delete()
-            df.save()
+        chimera = Chimera()
+        chimera.ParseFromString(req.body)
+        j = json_format.MessageToJson(chimera)
+        string_form = StringForm({"data": j})
+        if(string_form.is_valid()):
+            string_form.save()
+            objs = StringModel.objects.all().delete()
 
     return JsonResponse("{}", safe=False)
